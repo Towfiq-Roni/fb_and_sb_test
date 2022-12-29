@@ -1,3 +1,4 @@
+import 'package:fb_and_sb_test/changeNotifier/change_notifier_trial.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +44,15 @@ class _FutureProviderTrialState extends State<FutureProviderTrial> {
           children: [
             Text('FutureProvider value:'),
             Text('${_number.toString()}'),
+            ElevatedButton(onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ChangeNotifierTrial()),
+              );
+            },
+                child: Text('Go to Change')
+            ),
           ],
         ),
       ),

@@ -17,48 +17,51 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final anything = EventProvider();
-    final SecondAnything = EventProviderSecond();
+    final anything = EventProviderStream();
+    final SecondAnything = EventProviderFuture();
+    final ThirdAnything = EventProviderCNotifier();
 
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MultiProvider(providers: [
-        StreamProvider<int>.value(
-          value: anything.intStream(),
-          initialData: anything.count,
-        ),
-        FutureProvider<int>.value(
-            value: SecondAnything.fc,
-            initialData: SecondAnything.countF,
-        ),
-      ],
-          child: Builder(
-            builder: (context) {
-              return Scaffold(
-                backgroundColor: Colors.white,
-                appBar: AppBar(
-                  title: const Text("Main Page"),
-                ),
-                body: Center(
-                  child: ElevatedButton(
-                    child: const Text('Go to StreamProvider Page'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const StreamProviderTrial()),
-                      );
-                    },
-                  ),
-                ),
-              );
-            }
+      home: MultiProvider(
+        providers: [
+          StreamProvider(
+            create: (_) => EventProviderStream().intStream(),
+            initialData: 0,
           ),
-          // MyHomePage(title: 'Home Page')
+          FutureProvider(
+            create: (_) => EventProviderFuture().fc,
+            initialData: 0,
           ),
+          ChangeNotifierProvider(
+            create: (_) => EventProviderCNotifier(),
+          ),
+        ],
+        child: Builder(builder: (context) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: const Text("Main Page"),
+            ),
+            body: Center(
+              child: ElevatedButton(
+                child: const Text('Go to StreamProvider Page'),
+                onPressed: () async* {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const StreamProviderTrial()),
+                  );
+                },
+              ),
+            ),
+          );
+        }),
+        // MyHomePage(title: 'Home Page')
+      ),
     );
   }
 }

@@ -82,7 +82,16 @@ class _StreamProviderTrialState extends State<StreamProviderTrial> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('StreamProvider value:'),
-            Text('${_value.toString()}')
+            Text('${_value.toString()}'),
+            ElevatedButton(onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const FutureProviderTrial()),
+              );
+            },
+                child: Text('Go to Future')
+            ),
           ],
         ),
       ),

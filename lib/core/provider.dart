@@ -1,28 +1,27 @@
 import 'dart:async';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-class CalculateSum with ChangeNotifier{
-  int _count = 0;
+// class CalculateSum with ChangeNotifier{
+//   int _count = 0;
+//
+//   int get count => _count;
+//
+//   int get getCounter{
+//     return count;
+//   }
+//
+//   void increment(){
+//     _count++;
+//     notifyListeners();
+//   }
+// }
 
-  int get count => _count;
-
-  int get getCounter{
-    return count;
-  }
-
-  void increment(){
-    _count++;
-    notifyListeners();
-  }
-}
-
-class EventProvider {
+class EventProviderStream {
   StreamController<int> sc = StreamController();
   // int count = 0;
-  int _count = 0;
-
-  int get count => _count;
+  int _countS = 0;
+  int get count => _countS;
 
   int get getCounter{
     return count;
@@ -33,11 +32,24 @@ class EventProvider {
   }
 
   add() {
-    sc.add(++_count);
+    sc.add(++_countS);
   }
 }
 
-class EventProviderSecond{
-  int countF = EventProvider().count;
-  Future<int> fc = Future(() => EventProvider().count);
+class EventProviderFuture{
+  // int countF = EventProviderStream().count;
+  int countF = 0;
+  int get count => countF;
+  Future<int> fc = Future(() => EventProviderCNotifier().count);
 }
+
+class EventProviderCNotifier extends ChangeNotifier{
+  int _countC = 0;
+  int get count => _countC;
+  EventProviderCNotifier() {}
+  void incrementCount() {
+    _countC++;
+    notifyListeners();
+  }
+}
+
