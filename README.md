@@ -1,6 +1,6 @@
 # fb_and_sb_test
 
-Testing out and trying to use FutureBuilder and StreamBuilder
+Testing out and trying to use FutureBuilder and StreamBuilder with Provider
 
 ## Getting Started
 
